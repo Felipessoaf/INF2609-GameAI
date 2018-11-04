@@ -12,12 +12,17 @@ public class PatrolAction : Action
 
     private void Patrol(StateController controller)
     {
-        //controller.navMeshAgent.destination = controller.wayPointList[controller.nextWayPoint].position;
-        //controller.navMeshAgent.isStopped = false;
+        var sctrl = (SimpleStateController)controller;
+        var nextPos = sctrl.WayPointList[sctrl.NextWayPoint].position;
+        var currentPos = sctrl.transform.position;
+        nextPos.y = currentPos.y;
+        var direction = nextPos - currentPos;
 
-        //if (controller.navMeshAgent.remainingDistance <= controller.navMeshAgent.stoppingDistance && !controller.navMeshAgent.pathPending)
-        //{
-        //    controller.nextWayPoint = (controller.nextWayPoint + 1) % controller.wayPointList.Count;
-        //}
+        sctrl.GetComponent<Rigidbody>().velocity = direction.normalized * sctrl.Speed;
+
+        if (Vector3.Distance(currentPos, nextPos) <= 1f)
+        {
+            sctrl.NextWayPoint = (sctrl.NextWayPoint + 1) % sctrl.WayPointList.Count;
+        }
     }
 }

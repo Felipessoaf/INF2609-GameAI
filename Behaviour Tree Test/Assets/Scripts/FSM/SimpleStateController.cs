@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class SimpleStateController : StateController {
 
-    [HideInInspector] public List<Transform> wayPointList;
-    [HideInInspector] public int nextWayPoint;
-    [HideInInspector] public Transform chaseTarget;
+    public float Speed;
+    public List<Transform> WayPointList;
+    public LayerMask ChaseTargetLayers;
+    public LayerMask AvoidLayers;
+    public float ChaseRadius;
+    public float AvoidRadius;
 
-
+    [HideInInspector] public int NextWayPoint;
+    [HideInInspector] public Transform ChaseTarget;
 }

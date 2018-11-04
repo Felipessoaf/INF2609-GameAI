@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "PluggableAI/Decisions/Look")]
 public class LookDecision : Decision
 {
-
     public override bool Decide(StateController controller)
     {
         bool targetVisible = Look(controller);
@@ -14,20 +13,17 @@ public class LookDecision : Decision
 
     private bool Look(StateController controller)
     {
-        RaycastHit hit;
+        var sctrl = (SimpleStateController)controller;
+        var cols = Physics.OverlapSphere(sctrl.transform.position, sctrl.ChaseRadius, sctrl.ChaseTargetLayers);
 
-        //Debug.DrawRay(controller.eyes.position, controller.eyes.forward.normalized * controller.enemyStats.lookRange, Color.green);
-
-        //if (Physics.SphereCast(controller.eyes.position, controller.enemyStats.lookSphereCastRadius, controller.eyes.forward, out hit, controller.enemyStats.lookRange)
-        //    && hit.collider.CompareTag("Player"))
-        //{
-        //    controller.chaseTarget = hit.transform;
-        //    return true;
-        //}
-        //else
-        //{
-        //    return false;
-        //}
-        return false;
+        if (cols.Length > 0)
+        {
+            sctrl.ChaseTarget = cols[0].transform;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

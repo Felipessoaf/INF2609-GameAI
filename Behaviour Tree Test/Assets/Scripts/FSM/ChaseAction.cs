@@ -12,7 +12,12 @@ public class ChaseAction : Action
 
     private void Chase(StateController controller)
     {
-        //controller.navMeshAgent.destination = controller.chaseTarget.position;
-        //controller.navMeshAgent.Resume();
+        var sctrl = (SimpleStateController)controller;
+        var targetPos = sctrl.ChaseTarget.position;
+        var currentPos = sctrl.transform.position;
+        targetPos.y = currentPos.y;
+        var direction = targetPos - currentPos;
+
+        sctrl.GetComponent<Rigidbody>().velocity = direction.normalized * sctrl.Speed;
     }
 }

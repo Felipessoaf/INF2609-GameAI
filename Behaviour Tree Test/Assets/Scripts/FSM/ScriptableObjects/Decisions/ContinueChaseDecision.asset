@@ -8,6 +8,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4845910a42e44064abd9d54a842166c1, type: 3}
-  m_Name: ScanDecision
+  m_Script: {fileID: 11500000, guid: 2998de5e71fb1d840ab7272399f04a01, type: 3}
+  m_Name: ContinueChaseDecision
   m_EditorClassIdentifier: 
