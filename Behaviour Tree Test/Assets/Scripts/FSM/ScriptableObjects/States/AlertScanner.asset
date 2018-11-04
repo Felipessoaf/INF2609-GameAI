@@ -9,8 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: caec6d3736c5df542a5fd0d7f128dc4e, type: 3}
-  m_Name: AlertScan
+  m_Name: AlertScanner
   m_EditorClassIdentifier: 
   actions: []
-  transitions: []
-  sceneGizmoColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  transitions:
+  - decision: {fileID: 11400000, guid: e3bd988aa9c91674db2a5dd6e28e555f, type: 2}
+    trueState: {fileID: 11400000, guid: ac530e4c9bf1d5d479fa2854d8070d6a, type: 2}
+    falseState: {fileID: 11400000, guid: 07c0ca8ff84437f489d7a63481f12e11, type: 2}
+  - decision: {fileID: 11400000, guid: e33efdae2f2626d409f92158122d32f8, type: 2}
+    trueState: {fileID: 11400000, guid: 782f01ab040df5b4c9de99f58b849e34, type: 2}
+    falseState: {fileID: 11400000, guid: 07c0ca8ff84437f489d7a63481f12e11, type: 2}

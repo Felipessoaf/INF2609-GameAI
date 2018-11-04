@@ -9,9 +9,6 @@ public class StateController : MonoBehaviour
     public State remainState;
     public bool AIActive;
 
-    [HideInInspector] public List<Transform> wayPointList;
-    [HideInInspector] public int nextWayPoint;
-    [HideInInspector] public Transform chaseTarget;
     [HideInInspector] public float stateTimeElapsed;
 
     void Update()
