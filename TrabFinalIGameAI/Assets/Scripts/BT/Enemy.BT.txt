@@ -1,0 +1,11 @@
+tree("Root")
+    fallback tree("ChasePlayer") tree("Patrol")
+		
+tree("ChasePlayer")
+    sequence
+        CheckInRange()
+        FollowPlayer()
+
+tree("Patrol")
+    sequence
+        Waypoint()
