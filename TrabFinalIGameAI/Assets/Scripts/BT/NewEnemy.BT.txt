@@ -1,0 +1,10 @@
+tree("Root")
+    fallback tree("ChasePlayer") // tree("TrackPlayer") tree("Patrol")
+
+tree("ChasePlayer")
+    sequence
+        CheckPlayerInVisionCone()
+        SetDestinationToPlayerPosition()
+        //AnouncePlayerLocation()
+        //GiveChase()
+

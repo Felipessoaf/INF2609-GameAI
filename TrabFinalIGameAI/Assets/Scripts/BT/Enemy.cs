@@ -69,6 +69,8 @@ public class Enemy : MonoBehaviour {
             NextWayPoint = (NextWayPoint + 1) % WayPointList.Count;
         }
 
+        //move on navmesh?
+
         Task.current.Succeed();
     }
 }
