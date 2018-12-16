@@ -8,26 +8,21 @@ public class ChaseBehaviour : MonoBehaviour {
 
 	private NavMeshAgent agent;
 
-	[Range(0,50)]
-	public float viewRadius;
-	[Range(0, 360)]
-	public float viewAngle;
-
-	//N é o tamanho do buffer collidedBuffer, que é usado para checar se o player está próximo do inimigo
-	private int buffer_size = 5;
-	private Collider[] collidedBuffer;
-
+	private ChaseBehaviour[] allAgents;
+	private Vector3 lastKnownPlayerPosition;
+	private bool newPlayerPosition;
 	private Transform playerTransform;
 
-	
-
+	private bool destinationSet;
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
 		agent = GetComponent<NavMeshAgent>();
-
-		collidedBuffer = new Collider[buffer_size];
+		allAgents = GameObject.FindObjectsOfType<ChaseBehaviour>();
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+		destinationSet = false;
+
 	}
 	
 	// Update is called once per frame
@@ -36,52 +31,41 @@ public class ChaseBehaviour : MonoBehaviour {
 	}
 
 	[Task]
-	void CheckPlayerInVisionCone()
+	void AnnoucePlayerPosition()
 	{
-		//tenta traçar um raio de mim até o player.
-		//Se a distância não superar o viewRadius (param maxDistance = viewRadius),
-		//e não houver obstáculo na frente(Ray não chegaria se tivesse)
-		//e o angulo entre a direção "frente" do inimigo e do player não superar viewAngle,
-		//então inimigo viu o player
-		//senão, não viu
-
-		Debug.DrawRay(transform.position, Quaternion.Euler(0, viewAngle / 2.0f , 0) * transform.forward * viewRadius, Color.red, 0.1f);
-		Debug.DrawRay(transform.position, Quaternion.Euler(0, -viewAngle / 2.0f , 0) * transform.forward * viewRadius, Color.red, 0.1f);
-		Debug.DrawRay(transform.position, transform.forward * viewRadius, Color.red, 0.1f);
-
-
-		//checa ângulo primeiro:
-		//ignora y, porque o que vale aqui é "top-down"
-		Vector3 dir = playerTransform.position - transform.position;
-		dir.y = 0.0f;
-		Vector3 forw = transform.forward;
-		forw.y = 0;
-		if(Vector3.Angle(dir, forw) <= viewAngle / 2.0)
+		//anucia a todos os outros agentes que a localização do player é sabida
+		//isso inclui a mim mesmo
+		foreach(ChaseBehaviour cb in allAgents)
 		{
-			Debug.Log("Angle pass");
-			RaycastHit hit;
-			bool hasHit = Physics.Raycast(this.transform.position, dir, out hit, viewRadius, LayerMask.GetMask("Player", "Obstacle"));
-			if(hasHit && hit.transform.tag == "Player")
-			{
-				Debug.Log("Player Visto");
-				Task.current.Succeed();
-				return;
-			}
+			cb.lastKnownPlayerPosition = playerTransform.position;
+			cb.newPlayerPosition = true;
 		}
-
-		//senão, falha
-		Debug.Log("Fail");
-		Task.current.Fail();
-		return;
-		
-
+		Task.current.Succeed();
 	}
 
 	[Task]
-	void SetDestinationToPlayerPosition()
+	void NewPlayerLocationNotified()
 	{
-		agent.SetDestination(playerTransform.position);
-		Task.current.Succeed();
+		if(newPlayerPosition) Task.current.Succeed();
+		else Task.current.Fail();
+	}
+
+	[Task]
+	void CheckPlayerPosition()
+	{
+		if(!destinationSet)
+		{
+			agent.SetDestination(lastKnownPlayerPosition);
+			destinationSet = true;
+			Task.current.Succeed();
+		}
+		else if(Vector3.Distance(transform.position, lastKnownPlayerPosition) < 1.0f)
+		{
+			newPlayerPosition = false;
+			destinationSet = false;
+			Task.current.Succeed();
+
+		}
 	}
 
 }

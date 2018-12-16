@@ -1,10 +1,21 @@
 tree("Root")
-    fallback tree("ChasePlayer") // tree("TrackPlayer") tree("Patrol")
+    fallback tree("LookForPlayer") tree("CheckPlayerLocation") tree("Patrol") // tree("TrackPlayer") // tree("Patrol")
 
-tree("ChasePlayer")
+tree("LookForPlayer")
     sequence
         CheckPlayerInVisionCone()
-        SetDestinationToPlayerPosition()
-        //AnouncePlayerLocation()
-        //GiveChase()
+        AnnoucePlayerPosition()
+        CheckPlayerPosition()
+
+tree("CheckPlayerLocation")
+    sequence
+        NewPlayerLocationNotified()
+        CheckPlayerPosition()
+
+tree("Patrol")
+    sequence
+        while 
+            not CheckPlayerInVisionCone()
+            Waypoint()
+
 

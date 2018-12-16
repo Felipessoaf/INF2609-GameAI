@@ -29,6 +29,12 @@ public class DiffusionManager : MonoBehaviour {
 	private int playerPosX;
 	private int playerPosZ;
 
+	private Dictionary<String, Vector2Int> agentPositions;
+
+	private int lastTimeSeen;
+	[Tooltip("Quanto maior, mais rápido o valor da difusão no ponto onde o player foi visto decai")]
+	public float decayFactor;
+
 	
 	[SerializeField] public DiffTile[,] matrix;
 
@@ -44,8 +50,12 @@ public class DiffusionManager : MonoBehaviour {
 	{
 		coll = GetComponent<BoxCollider>();
 		SetMatrixPositions();
-		
 
+		var t = GameObject.FindGameObjectWithTag("Player").transform.position;
+		UpdatePlayerPosition(GameObject.FindGameObjectWithTag("Player").transform.position);
+		lastTimeSeen = -1000;
+
+		agentPositions = new Dictionary<string, Vector2Int>();
 	}
 	
 	// Update is called once per frame
@@ -57,12 +67,28 @@ public class DiffusionManager : MonoBehaviour {
 				Color col = i == 0 && j == 0 ? Color.red : matrix[i,j].ignore ? Color.gray : Color.green;
 
 				Vector3 pos = new Vector3(x0 + i*dx, coll.center.y, z0 + j * dz);
-				Debug.DrawLine(pos, pos + (matrix[i,j].value + 1) * Vector3.up, col, 0.1f, false);
+				Debug.DrawLine(pos, pos + (matrix[i,j].value + 1) * Vector3.up * 0.01f, col, 0.1f, false);
 				//Debug.Log(matrix[i,j].value);
 			}
 		}
 
+		//traça player position
+		Vector3 pp = new Vector3(x0 + playerPosX * dx, transform.position.y,z0 + playerPosZ * dz);
+		Debug.DrawLine(pp, pp + 5 * Vector3.up, Color.blue, 0.1f, false);
+
+		//traça posição dos agentes
+		foreach(KeyValuePair<string, Vector2Int> pair in agentPositions)
+		{
+			Vector3 ppg = new Vector3(x0 + pair.Value.x * dx, transform.position.y,z0 + pair.Value.y * dz);
+			Debug.DrawLine(pp, pp + 5 * Vector3.up, Color.magenta, 0.1f, false);
+		}
+
 		UpdateDiffusionValues();
+	}
+
+	void FixedUpdate()
+	{
+		//UpdateDiffusionValues();
 	}
 
 	public void UpdateDiffusionValues()
@@ -80,11 +106,16 @@ public class DiffusionManager : MonoBehaviour {
 				{
 
 				}
-				else if(i == NX /2 && j == NZ / 2)//(i == playerPosX && j == playerPosZ)
+				else if(i == playerPosX && j == playerPosZ)
 				//o player está aqui
 				{
-					Debug.Log("fasdfasf");
-					matrix[i,j].value = ValueAtObjective;
+					//decaimento pela exponecial
+					matrix[i,j].value = ValueAtObjective;// * Mathf.Exp(decayFactor * (lastTimeSeen - Time.frameCount));
+				}
+				else if(agentPositions.ContainsValue(new Vector2Int(i, j)))
+				// senão, tentamos ver no dicionario se ha um agente nessa posição
+				{
+					matrix[i,j].value = -ValueAtObjective;
 				}
 				else
 				{
@@ -100,10 +131,20 @@ public class DiffusionManager : MonoBehaviour {
 					//esquerda
 					if(i - 1 >= 0) sum += matrix[i-1,j].value - matrix[i,j].value;
 
-					matrix[i,j].value = matrix[i,j].value + DiffCoefficient * sum;
+					matrix[i,j].value = matrix[i,j].value + DiffCoefficient * sum / 4.0f;
 				}
 			}
 		}
+	}
+
+	public void UpdatePlayerPosition(Vector3 playerPosition)
+	{
+		//descobre o tile em que o player está baseado na posição dele
+		playerPosX = (int) ((playerPosition.x - x0) / dx);
+		playerPosZ = (int) ((playerPosition.z - z0) / dz);
+		matrix[playerPosX,playerPosZ].value = ValueAtObjective;
+		lastTimeSeen = Time.frameCount;
+
 	}
 
 	public void SetMatrixPositions()
@@ -144,5 +185,51 @@ public class DiffusionManager : MonoBehaviour {
 
 		Debug.Log("Matrix set succesfully");
 
+	}
+
+	public Vector3 GetBestNeighborPosition(Vector3 currentPosition, string name)
+	{
+		
+		int PosX = (int) ((currentPosition.x - x0) / dx);
+		int PosZ = (int) ((currentPosition.z - z0) / dz);
+
+		//quando alguém pergunta por uma boa solução, pegamos o lugar onde essa pessoa está e setamos para 0
+		//matrix[PosX, PosZ].value = - ValueAtObjective;
+
+		//registramos ou atualizamos a posição desse agente
+		agentPositions[name] = new Vector2Int(PosX, PosZ);
+
+		int i = PosX, j = PosZ;
+
+		float cima = -1, baixo = -1, direita = -1, esquerda = -1;
+		
+		//cima
+		if(j - 1 >= 0 && !matrix[i,j-1].ignore) cima = matrix[i,j-1].value;
+		//baixo
+		if(j + 1 < NZ && !matrix[i,j+1].ignore) baixo = matrix[i,j+1].value;
+		//direita
+		if(i + 1 < NX && !matrix[i+1,j].ignore) direita = matrix[i+1,j].value;
+		//esquerda
+		if(i - 1 >= 0 && !matrix[i-1,j].ignore) esquerda = matrix[i-1,j].value;
+
+		if(cima == Mathf.Max(cima, baixo, direita, esquerda))
+		{
+			return new Vector3(x0 + PosX * dx, currentPosition.y, z0 + (PosZ - 1) * dz);
+		}
+		else if(baixo == Mathf.Max(cima, baixo, direita, esquerda))
+		{
+			return new Vector3(x0 + PosX * dx, currentPosition.y, z0 + (PosZ + 1) * dz);
+		}
+		else if(direita == Mathf.Max(cima, baixo, direita, esquerda))
+		{
+			return new Vector3(x0 + (PosX + 1) * dx, currentPosition.y, z0 + PosZ * dz);
+		}
+		else if(esquerda == Mathf.Max(cima, baixo, direita, esquerda))
+		{
+			return new Vector3(x0 + (PosX - 1) * dx, currentPosition.y, z0 + PosZ * dz);
+		}
+		
+		//não é pra cair aqui, mas evita erro de compilação
+		return currentPosition;
 	}
 }
