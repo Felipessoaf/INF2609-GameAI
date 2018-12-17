@@ -15,19 +15,12 @@ public class ChaseBehaviour : MonoBehaviour {
 
 	private bool destinationSet;
 
-	// Use this for initialization
 	void Start () 
 	{
 		agent = GetComponent<NavMeshAgent>();
 		allAgents = GameObject.FindObjectsOfType<ChaseBehaviour>();
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 		destinationSet = false;
-
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 
 	[Task]
@@ -65,8 +58,6 @@ public class ChaseBehaviour : MonoBehaviour {
 			newPlayerPosition = false;
 			destinationSet = false;
 			Task.current.Succeed();
-
 		}
 	}
-
 }

@@ -6,19 +6,19 @@ using UnityEngine.AI;
 
 public class DestinationController : MonoBehaviour {
 
-	// Use this for initialization
 	public List<Transform> WayPointList;
 	[HideInInspector] public int NextWayPoint;
 
 	private NavMeshAgent agent;
 	public bool destinationSet;
 
-	void Start () {
+	void Start ()
+    {
 		agent = GetComponent<NavMeshAgent>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		destinationSet = false;
 	}
 
@@ -45,11 +45,10 @@ public class DestinationController : MonoBehaviour {
         //move on navmesh
 		if(!destinationSet)
 		{
-			Debug.Log("setting first dest");
+			//Debug.Log("setting first dest");
 			agent.SetDestination(nextPos);
 			destinationSet = true;
 		}
-		
 
         Task.current.Succeed();
     }
