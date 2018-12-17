@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4374611, g: 0.48527503, b: 0.5655504, a: 1}
+  m_IndirectSpecularColor: {r: 0.4374617, g: 0.48527575, b: 0.5655511, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -270,7 +270,7 @@ Light:
   serializedVersion: 8
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.5
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -419,7 +419,7 @@ BoxCollider:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 354591877}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 59dadeb354289c94cba64a63e4a3a213, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -913,7 +913,7 @@ BoxCollider:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 945240500}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 59dadeb354289c94cba64a63e4a3a213, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -979,7 +979,7 @@ GameObject:
   - component: {fileID: 1041977035}
   m_Layer: 10
   m_Name: AIBT (2)
-  m_TagString: Untagged
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1141,7 +1141,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 6
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -1359,7 +1359,7 @@ BoxCollider:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1322627272}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 59dadeb354289c94cba64a63e4a3a213, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1447,6 +1447,7 @@ GameObject:
   - component: {fileID: 1452569116}
   - component: {fileID: 1452569115}
   - component: {fileID: 1452569114}
+  - component: {fileID: 1452569118}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -1479,7 +1480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f4c6a740efa7464cbb95ee3921ad753, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 5
+  Speed: 8
 --- !u!54 &1452569116
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1507,6 +1508,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1452569118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1452569113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed9bbaabf0e36f447897ba41f801708a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1452569120
 Transform:
   m_ObjectHideFlags: 0
@@ -1574,7 +1586,7 @@ BoxCollider:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1533517190}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 59dadeb354289c94cba64a63e4a3a213, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1644,7 +1656,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1541479651}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -2.52, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1533517191}
@@ -1879,7 +1891,7 @@ BoxCollider:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1658504764}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 59dadeb354289c94cba64a63e4a3a213, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1980,7 +1992,7 @@ BoxCollider:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1813427110}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 59dadeb354289c94cba64a63e4a3a213, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -2216,7 +2228,7 @@ GameObject:
   - component: {fileID: 2017703468}
   m_Layer: 10
   m_Name: AIBT (1)
-  m_TagString: Untagged
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2242,7 +2254,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 6
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

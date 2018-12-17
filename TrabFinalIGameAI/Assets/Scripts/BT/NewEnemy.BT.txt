@@ -1,5 +1,5 @@
 tree("Root")
-    fallback tree("LookForPlayer") tree("CheckPlayerLocation") tree("Patrol") // tree("TrackPlayer") // tree("Patrol")
+    fallback tree("LookForPlayer") tree("CheckPlayerLocation") tree("Patrol")
 
 tree("LookForPlayer")
     sequence
