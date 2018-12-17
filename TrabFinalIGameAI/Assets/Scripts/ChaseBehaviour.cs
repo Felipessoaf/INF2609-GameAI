@@ -39,6 +39,7 @@ public class ChaseBehaviour : MonoBehaviour {
 		{
 			cb.lastKnownPlayerPosition = playerTransform.position;
 			cb.newPlayerPosition = true;
+			cb.destinationSet = false;
 		}
 		Task.current.Succeed();
 	}

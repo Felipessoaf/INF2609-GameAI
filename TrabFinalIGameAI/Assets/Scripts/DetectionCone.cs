@@ -10,17 +10,45 @@ public class DetectionCone : MonoBehaviour {
 	public float viewRadius;
 	[Range(0, 360)]
 	public float viewAngle;
+	private bool drawCone;
 
 	private Transform playerTransform;
+	private LineRenderer lineRenderer;
+	private Vector3[] points;
+
+	public bool showVisionCone;
 
 	void Start () {
 		
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+		lineRenderer = GetComponent<LineRenderer>();
+		points = new Vector3[5];
 	}
 	
+	void Update()
+	{
+		if(drawCone)
+		{
+			lineRenderer.enabled = true;
+			lineRenderer.startWidth = 0.1f;
+			lineRenderer.endWidth = 0.1f;
+
+			lineRenderer.positionCount = points.Length;
+			lineRenderer.SetPositions(points);
+			drawCone = false;
+		}
+		else
+		{
+			lineRenderer.enabled = false;
+		}
+	}
+
 	[Task]
 	void CheckPlayerInVisionCone()
 	{
+		RaycastHit hit;
+		if(showVisionCone) CalculateVisionCone();
+
 		//tenta traçar um raio de mim até o player.
 		//Se a distância não superar o viewRadius (param maxDistance = viewRadius),
 		//e não houver obstáculo na frente(Ray não chegaria se tivesse)
@@ -42,7 +70,6 @@ public class DetectionCone : MonoBehaviour {
 		if(Vector3.Angle(dir, forw) <= viewAngle / 2.0)
 		{
 			Debug.Log("Angle pass");
-			RaycastHit hit;
 			bool hasHit = Physics.Raycast(this.transform.position, dir, out hit, viewRadius, LayerMask.GetMask("Player", "Obstacle"));
 			if(hasHit && hit.transform.tag == "Player")
 			{
@@ -58,11 +85,39 @@ public class DetectionCone : MonoBehaviour {
 
 	}
 
-	[Task]
-	void PrintTest()
+	private void CalculateVisionCone()
 	{
-		Debug.Log("Print");
-		Task.current.Succeed();
-		
+		RaycastHit hit;
+		drawCone = true;
+			//visualização legal: é mais complicada que a detecção em si
+			points[0] = transform.position;
+			if(Physics.Raycast(transform.position, Quaternion.Euler(0, viewAngle / 2.0f , 0) * transform.forward, out hit, viewRadius, LayerMask.GetMask("Obstacle")))
+			{
+				points[1] = hit.point;
+			}
+			else
+			{
+				points[1] = transform.position + Quaternion.Euler(0, viewAngle / 2.0f , 0) * transform.forward * viewRadius;
+			}
+			
+			if(Physics.Raycast(transform.position, transform.forward, out hit, viewRadius, LayerMask.GetMask("Obstacle")))
+			{
+				points[2] = hit.point;
+			}
+			else
+			{
+				points[2] = transform.position + transform.forward * viewRadius;
+			}
+
+			if(Physics.Raycast(transform.position, Quaternion.Euler(0, -viewAngle / 2.0f , 0) * transform.forward, out hit, viewRadius, LayerMask.GetMask("Obstacle")))
+			{
+				points[3] = hit.point;
+			}
+			else
+			{
+				points[3] = transform.position + Quaternion.Euler(0, -viewAngle / 2.0f , 0) * transform.forward * viewRadius;
+			}		
+			points[4] = transform.position;
 	}
+
 }
