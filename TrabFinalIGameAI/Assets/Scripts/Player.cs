@@ -26,6 +26,10 @@ public class Player : MonoBehaviour {
         {
             other.gameObject.GetComponent<Animator>().SetTrigger("open");
         }
+        else if (other.gameObject.CompareTag("doorcell"))
+        {
+            other.gameObject.GetComponent<Animator>().SetTrigger("open");
+        }
         else if (other.gameObject.CompareTag("key"))
         {
             hasKey = true;
