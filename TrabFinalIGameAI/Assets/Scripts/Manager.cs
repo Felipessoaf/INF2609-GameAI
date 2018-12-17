@@ -15,6 +15,7 @@ public class Manager : MonoBehaviour {
 
     public void Victory()
     {
+        Time.timeScale = 0;
         VictoryCanvas.SetActive(true);
     }
 

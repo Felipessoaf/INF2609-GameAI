@@ -7,6 +7,9 @@ TagManager:
   - ground
   - hole
   - enemy
+  - end
+  - door
+  - key
   layers:
   - Default
   - TransparentFX
