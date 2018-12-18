@@ -12,9 +12,12 @@ public class DestinationController : MonoBehaviour {
 	private NavMeshAgent agent;
 	public bool destinationSet;
 
+	private DetectionCone dc;
+
 	void Start ()
     {
 		agent = GetComponent<NavMeshAgent>();
+		dc = GetComponent<DetectionCone>();
 	}
 	
 	void Update ()
@@ -25,7 +28,8 @@ public class DestinationController : MonoBehaviour {
 	[Task]
     void Waypoint()
     {
-        var nextPos = WayPointList[NextWayPoint].position;
+        dc.coneColor = Color.blue;
+		var nextPos = WayPointList[NextWayPoint].position;
         var currentPos = transform.position;
         nextPos.y = currentPos.y;
         var direction = nextPos - currentPos;

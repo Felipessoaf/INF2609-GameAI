@@ -10,7 +10,9 @@ tree("LookForPlayer")
 tree("CheckPlayerLocation")
     sequence
         NewPlayerLocationNotified()
-        CheckPlayerPosition()
+        while 
+            not CheckPlayerInVisionCone()
+            CheckPlayerPosition()
 
 tree("Patrol")
     sequence

@@ -18,6 +18,8 @@ public class DetectionCone : MonoBehaviour {
 
 	public bool showVisionCone;
 
+	public Color coneColor;
+
 	void Start ()
     {
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -27,13 +29,14 @@ public class DetectionCone : MonoBehaviour {
 	
 	void Update()
 	{
-#if UNITY_EDITOR
+
         if (drawCone)
 		{
 			lineRenderer.enabled = true;
 			lineRenderer.startWidth = 0.1f;
 			lineRenderer.endWidth = 0.1f;
-
+			lineRenderer.startColor = coneColor;
+			lineRenderer.endColor = coneColor;
 			lineRenderer.positionCount = points.Length;
 			lineRenderer.SetPositions(points);
 			drawCone = false;
@@ -42,7 +45,7 @@ public class DetectionCone : MonoBehaviour {
 		{
 			lineRenderer.enabled = false;
 		}
-#endif
+
     }
 
 	[Task]

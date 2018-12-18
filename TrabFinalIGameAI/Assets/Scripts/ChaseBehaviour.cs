@@ -14,6 +14,7 @@ public class ChaseBehaviour : MonoBehaviour {
 	private Transform playerTransform;
 
 	private bool destinationSet;
+	private DetectionCone dc;
 
 	void Start () 
 	{
@@ -21,6 +22,7 @@ public class ChaseBehaviour : MonoBehaviour {
 		allAgents = GameObject.FindObjectsOfType<ChaseBehaviour>();
 		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 		destinationSet = false;
+		dc = GetComponent<DetectionCone>();
 	}
 
 	[Task]
@@ -47,6 +49,7 @@ public class ChaseBehaviour : MonoBehaviour {
 	[Task]
 	void CheckPlayerPosition()
 	{
+		dc.coneColor = Color.red;
 		if(!destinationSet)
 		{
 			agent.SetDestination(lastKnownPlayerPosition);

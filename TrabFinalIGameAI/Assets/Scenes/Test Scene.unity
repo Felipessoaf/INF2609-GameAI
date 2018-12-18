@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4374617, g: 0.48527575, b: 0.5655511, a: 1}
+  m_IndirectSpecularColor: {r: 0.4374611, g: 0.48527503, b: 0.5655504, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -594,7 +594,7 @@ LineRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -715,6 +715,7 @@ MonoBehaviour:
   viewRadius: 8
   viewAngle: 60
   showVisionCone: 1
+  coneColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!65 &271323553
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3151,7 +3152,7 @@ LineRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3271,6 +3272,7 @@ MonoBehaviour:
   viewRadius: 8
   viewAngle: 60
   showVisionCone: 1
+  coneColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!65 &863090344
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4158,7 +4160,7 @@ LineRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4278,6 +4280,7 @@ MonoBehaviour:
   viewRadius: 8
   viewAngle: 60
   showVisionCone: 1
+  coneColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!65 &1041977039
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4884,7 +4887,7 @@ LineRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5004,6 +5007,7 @@ MonoBehaviour:
   viewRadius: 8
   viewAngle: 60
   showVisionCone: 1
+  coneColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!65 &1277299801
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7684,6 +7688,7 @@ MonoBehaviour:
   viewRadius: 8
   viewAngle: 60
   showVisionCone: 1
+  coneColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &2017703463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7777,7 +7782,7 @@ LineRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
